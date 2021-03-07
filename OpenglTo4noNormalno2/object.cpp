@@ -4,6 +4,7 @@
 #include "object.h"
 #include <glm/gtx/transform.hpp>
 
+
 int object::count() {
 	return ColumnCount * LineCount;
 }

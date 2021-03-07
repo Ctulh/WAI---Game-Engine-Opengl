@@ -34,6 +34,8 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
 }
 void Renderer::DrawVB(const VertexArray& va, const Shader& shader) const
 {
+	glStencilFunc(GL_ALWAYS, 1, 0xFF);
+	glStencilMask(0xFF);
 	shader.Bind();
 	va.Bind();
 	GLCall(glDrawArrays(GL_TRIANGLES, 0, va.GetSize()/sizeof(GLfloat)));
