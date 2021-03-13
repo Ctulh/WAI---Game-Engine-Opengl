@@ -146,7 +146,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="IndexBuffer.cpp" />
-    <ClCompile Include="object.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -161,7 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IndexBuffer.h" />
-    <ClInclude Include="object.h" />
+    <ClInclude Include="Loader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="src\imgui\imconfig.h" />

@@ -24,5 +24,5 @@ void GLClearError();
  {
  public:
 	 void Draw(const VertexArray& va,const IndexBuffer& ib,const Shader& shader) const;
-	 void DrawVB(const VertexArray& va, const Shader& shader) const;
+	 void DrawVB(const VertexArray& va, const Shader& shader,int color) const;
  };
