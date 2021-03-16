@@ -55,7 +55,7 @@ struct MVPS
 
 MVPS mvpArray[2];
 
-MVPS *selected;
+MVPS* selected;
 
 glm::mat4 MVP;
 glm::mat4 Model;
@@ -104,7 +104,7 @@ int main()
 
 	returned temp = loadVerticiesAndUVs(pathvert, pathuv);
 
-	VertexBuffer vb_square(temp.data,temp.Columns*temp.Lines*sizeof(GLfloat));
+	VertexBuffer vb_square(temp.data, temp.Columns * temp.Lines * sizeof(GLfloat));
 	//V/ertexBuffer vb_square(obj);
 
 	VertexBufferLayout layout;
@@ -147,7 +147,7 @@ int main()
 
 	std::string path = "res/picture1.png";
 	std::string path2 = "res/picture1.png";
-	
+
 
 	//shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -163,39 +163,39 @@ int main()
 	texture.Bind();
 	shader.SetUniform1i("u_Texture", 0);
 
-	
 
-	mvpArray[1].Model = glm::scale(Model, glm::vec3(0.2f, 0.2f, 0.2f));
-	mvpArray[1].Model = glm::translate(Model, glm::vec3(-1.5f, 0.0f, 0.0f));
-	mvpArray[1].Projection = Projection;
-	mvpArray[1].View = View;
 
 	mvpArray[0].Model = glm::scale(Model, glm::vec3(0.2f, 0.2f, 0.2f));
-	mvpArray[0].Model = glm::translate(Model, glm::vec3(1.5f, 0.0f, 0.0f));
+	mvpArray[0].Model = glm::translate(Model, glm::vec3(-1.0f, 0.0f, 0.0f));
 	mvpArray[0].Projection = Projection;
 	mvpArray[0].View = View;
+
+	mvpArray[1].Model = glm::scale(Model, glm::vec3(0.2f, 0.2f, 0.2f));
+	mvpArray[1].Model = glm::translate(Model, glm::vec3(1.5f, 0.0f, 0.0f));
+	mvpArray[1].Projection = Projection;
+	mvpArray[1].View = View;
 
 	selected = &mvpArray[0];
 
 	do {
 		glClearStencil(0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 
 		ImGui_ImplGlfwGL3_NewFrame();
 
 		glEnable(GL_STENCIL_TEST);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-		
+
 		for (int i = 0; i < 2; i++)
 		{
 			//selected->Model = glm::translate(Model, glm::vec3(-1.5f, 0.0f, 0.0f));
 			MVP = mvpArray[i].Projection * mvpArray[i].View * mvpArray[i].Model;
 			shader.SetUniformMatrix4fv("MVP", &MVP[0][0]);
-			renderer.DrawVB(va, shader,i);
+			renderer.DrawVB(va, shader, i);
 		}
-		
-		
+
+
 		{
 			ImGui::Checkbox("Rotation", &rotation);
 			ImGui::SliderFloat3("Scale", &scale.x, 0.0f, 2.0f);            // Edit 1 float using a slider from 0.0f to 1.0f   
@@ -206,7 +206,7 @@ int main()
 					Model = glm::scale(ModelNew, scale);
 				}
 			}
-			
+
 			ImGui::Text((isobject) ? "some object" : "nothing");
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		}
@@ -228,59 +228,55 @@ int main()
 		prevscale = scale; }
 
 	} while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0);
-	
+
 	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
 	glfwTerminate();
 }
+glm::quat myquatX;
 
-static void CursorPositionCallback(GLFWwindow* window, double xPos, double yPos){
+static void CursorPositionCallback(GLFWwindow* window, double xPos, double yPos) {
 	//if (!rotation) {
-		if (!mouse){
-			previousXpos = xPos;
-			previousYpos = yPos;
-			unsigned int index;
-			glReadPixels(previousXpos, height - previousYpos - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
-			if (index != 0)
-				isobject = true;
-			else
-				isobject = false;
-		}
-		else if (mouse){
-			glm::quat myquat;
-			myquat = glm::angleAxis(glm::radians(((float)(previousXpos - xPos)) / 10), glm::vec3(0.0f, 1.0f, 0.0f));
-			glm::quat myquatY;
-			myquatY = glm::angleAxis(glm::radians(((float)(previousYpos - yPos)) / 10), glm::vec3(1.0f, 0.0f, 0.0f));
-
-			glm::vec3 temp;
-			
-			//selected->Model = glm::scale(Model, glm::vec3(0.2f, 0.2f, 0.2f));
-	
-			//
-			for (int i = 0; i < 4; i++){
-				temp = glm::vec3(selected->Model[i][0], selected->Model[i][1], selected->Model[i][2]) * myquat * myquatY;
-				selected->Model[i][0] = temp[0];
-				selected->Model[i][1] = temp[1];
-				selected->Model[i][2] = temp[2];
-			}
-			
-
-			//selected->Model = glm::translate(Model, glm::vec3(-1.5f, 0.0f, 0.0f));
-			
-			
-			previousXpos = xPos;
-			previousYpos = yPos;
-		}
+	if (!mouse) {
+		previousXpos = xPos;
+		previousYpos = yPos;
+		unsigned int index;
+		glReadPixels(previousXpos, height - previousYpos - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+		if (index != 0)
+			isobject = true;
+		else
+			isobject = false;
 	}
+	
+	else if (mouse) {
+		glm::quat myquat;
+		myquat = glm::angleAxis(glm::radians(((float)(previousXpos - xPos)) / 10), glm::vec3(0.0f, -1.0f, 0.0f));
+		glm::quat myquatY;
+		myquatY = glm::angleAxis(glm::radians(((float)(previousYpos - yPos)) / 10), glm::vec3(-1.0f, 0.0f, 0.0f));
+		glm::vec4 temp;
+		for (int i = 0; i < 4; i++){
+			temp[i] = selected->Model[3][i];
+		}
+
+		selected->Model = glm::toMat4(myquat * myquatY) * selected->Model;
+
+		for (int i = 0; i < 4; i++) {
+			selected->Model[3][i] = temp[i];
+		}
+		
+		previousXpos = xPos;
+		previousYpos = yPos;
+	}
+}
 //}
 
 
 
 void mouseButtonCallback(GLFWwindow* window, int button, int action, int mode)
 {
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
 		mouse = true;
-		
+
 		GLbyte color[4];
 		GLfloat depth;
 		GLuint index;
@@ -292,12 +288,8 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mode)
 			previousXpos, previousYpos, color[0], color[1], color[2], color[3], depth, index);
 		selected = &mvpArray[index - 1];
 	}
-	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE){
+	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
 		std::cout << "Left button released" << std::endl;
 		mouse = false;
 	}
 }
-
-
-
-
