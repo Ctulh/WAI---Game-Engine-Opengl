@@ -88,12 +88,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend;C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend\glfw\include;C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Depend;$(SolutionDir)Depend\glfw\include;$(SolutionDir)Depend\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend\glfw\lib-vc2019;C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend\glew\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Depend\glfw\lib-vc2019;$(SolutionDir)Depend\glew\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -105,14 +105,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend;C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend\glfw\include;C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Depend;$(SolutionDir)Depend\glfw\include;$(SolutionDir)Depend\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend\glfw\lib-vc2019;C:\Users\pilni\Desktop\OpenglTo4noNormalno2\Depend\glew\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Depend\glfw\lib-vc2019;$(SolutionDir)Depend\glew\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
