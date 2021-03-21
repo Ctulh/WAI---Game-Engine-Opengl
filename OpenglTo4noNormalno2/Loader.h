@@ -2,15 +2,10 @@
 #include <fstream>
 #include <sstream>
 #include "GL/glew.h"
-
+#include "returned.h"
 int count = 0;
 
-struct returned
-{
-	int Lines;
-	int Columns;
-	GLfloat* data;
-};
+
 
 GLfloat* lineTodigigtss(std::string str) {
 	bool minus = false;

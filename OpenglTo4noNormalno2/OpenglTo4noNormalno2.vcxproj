@@ -146,6 +146,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectArray.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -159,9 +161,12 @@
     <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Object.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="Loader.h" />
+    <ClInclude Include="ObjectArray.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="returned.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="src\imgui\imconfig.h" />
     <ClInclude Include="src\imgui\imgui.h" />

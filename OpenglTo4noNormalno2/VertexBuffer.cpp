@@ -35,5 +35,5 @@ void VertexBuffer::UnBind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0); 
 }
-unsigned int VertexBuffer::GetSize() const { std::cout << std::endl << "size - " << m_Size; return m_Size; }
+unsigned int VertexBuffer::GetSize() const { return m_Size; }
 

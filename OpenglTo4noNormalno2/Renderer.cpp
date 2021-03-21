@@ -32,11 +32,20 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
 	GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 
 }
-void Renderer::DrawVB(const VertexArray& va, const Shader& shader,int color) const
+void Renderer::DrawVB(const VertexArray& va, const Shader& shader,const int color) const
 {
 	
 	shader.Bind();
 	va.Bind();
-	glStencilFunc(GL_ALWAYS, color + 1, -1);
+	//std::cout << "Renderer set " << color + 1 << std::endl;
+	glStencilFunc(GL_ALWAYS, color + 1, 0);
 	GLCall(glDrawArrays(GL_TRIANGLES, 0, va.GetSize()/sizeof(GLfloat)));
 }
+
+// void Renderer::DrawObjectArray(const ObjectArray& obj) const {
+// 	for (int i = 0; i < obj.size; i++){
+// 		obj.Array[i].Bind();
+// 		glStencilFunc(GL_ALWAYS, i + 1, -1);
+// 		GLCall(glDrawArrays(GL_TRIANGLES, 0, obj.Array[i].VA.GetSize() / sizeof(GLfloat)));
+// 	}
+// }
