@@ -8,6 +8,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include <time.h>
 
+
 #include "returned.h"
 #include "Loader.h"
 //#include "VertexBuffer.h"
@@ -24,9 +25,14 @@
 #include "ObjectArray.h"
 #define fps 60
 
-struct Vertex
+GLuint index;
+enum MyItemColumnID
 {
-	glm::vec3 position;
+	MyItemColumnID_ID,
+	MyItemColumnID_Name,
+	MyItemColumnID_Action,
+	MyItemColumnID_Quantity,
+	MyItemColumnID_Description
 };
 
 glm::vec3 cameraPos(0.0f, 0.0f, 4.0f);
@@ -41,8 +47,8 @@ bool mouse = false;
 int previousXpos;
 int previousYpos;
 
-int width = 800;
-int height = 600;
+int width = 1600;
+int height = 900;
 
 
 //object obj;
@@ -87,7 +93,7 @@ int main()
 
 
 
-	window = glfwCreateWindow(800, 600, "Test", NULL, NULL);
+	window = glfwCreateWindow(width, height, "Test", NULL, NULL);
 	if (window == NULL)
 	{
 		fprintf(stderr, "something goes wrong");
@@ -165,56 +171,54 @@ int main()
 	ObjectArray objects;
 	objects.Add(temp, path);
 	objects_size++;
-// 	selected = objects.Array[0];
-// 	objects.Add(temp, path);
-// 	//objects.Array[objects.Array.size()-1]->Translate(glm::vec3(-1.0f, 0.0f, 0.0f));
-// 	objects_size++;
-// 	objects.Add(temp, path);
-// 	//objects.Array[objects.Array.size()-1]->Translate(glm::vec3(-1.0f, 0.0f, 0.0f));
-// 	objects_size++;
+
 
 	do {
 		glClearStencil(0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 
-		ImGui_ImplGlfwGL3_NewFrame();
 
 		glEnable(GL_STENCIL_TEST);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-// 		objects.Array[0]->Bind();
-// 		objects.Array[1]->Bind();
-// 		objects.Array[2]->Bind();
-// 		renderer.DrawVB(objects.Array[0]->VA, objects.Array[0]->shader, 0);
-// 		renderer.DrawVB(objects.Array[1]->VA, objects.Array[1]->shader, 1);
-// 		renderer.DrawVB(objects.Array[2]->VA, objects.Array[2]->shader, 2);
-// 		
-// 		//renderer.DrawVB(obj.VA, obj.shader, 1);
 
 		objects.Draw(renderer);
 		selected = objects.Array[SelectedObjectIndex];
 
+
+		glStencilFunc(GL_ALWAYS, 255, 0);
 		{
-			ImGui::Checkbox("Rotation", &rotation);
-			ImGui::SliderFloat3("Scale", &scale.x, 0.0f, 2.0f);            // Edit 1 float using a slider from 0.0f to 1.0f   
-			if (ImGui::IsItemActive())
+			ImGui_ImplGlfwGL3_NewFrame();
+			ImGui::Begin("Objects", NULL);
+			if (ImGui::BeginTable("##table1", 3))
 			{
-				if (scale != prevscale)
+				ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_DefaultSort | ImGuiTableColumnFlags_WidthFixed | ImGuiTableColumnFlags_NoHide, 0.0f, MyItemColumnID_ID);
+				ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthFixed, 0.0f, MyItemColumnID_Name);
+				ImGui::TableSetupColumn("Visible", ImGuiTableColumnFlags_NoSort | ImGuiTableColumnFlags_WidthFixed, 0.0f, MyItemColumnID_Action);
+				ImGui::TableHeadersRow();
+				for (int i = 0; i < objects_size; i++) {
+					ImGui::TableNextRow();
+					ImGui::TableSetColumnIndex(0);
+					ImGui::Text(&std::to_string(i)[0]);
+					ImGui::TableSetColumnIndex(1);
+					ImGui::Text(objects.Array[i]->Name);
+					if (ImGui::TableSetColumnIndex(2))
+					{
+						if (ImGui::RadioButton("", objects.Array[i]->propirties.Visible)) {
+							objects.Array[i]->propirties.Visible = !objects.Array[i]->propirties.Visible;
+						}
+					}
+				}
+				ImGui::EndTable();
+				ImGui::Button("add");
+				if (ImGui::IsItemClicked())
 				{
-					Model = glm::scale(ModelNew, scale);
+					objects.Add(temp, path);
+					objects_size++;
 				}
 			}
-			ImGui::Button("add");
-			if (ImGui::IsItemClicked())
-			{
-				objects.Add(temp, path);
-				//objects.Array[objects.Array.size()-1]->Translate(glm::vec3(-1.0f, 0.0f, 0.0f));
-				objects_size++;
-				
-			}
-			ImGui::Text((isobject) ? "some object" : "nothing");
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::End();
 		}
 
 
@@ -253,15 +257,17 @@ static void CursorPositionCallback(GLFWwindow* window, double xPos, double yPos)
 		else
 			isobject = false;
 	}
-	
+
 	else if (mouse) {
-		glm::quat myquatX;
-		myquatX = glm::angleAxis(glm::radians(((float)(previousXpos - xPos)) / 10), glm::vec3(0.0f, -1.0f, 0.0f));
-		glm::quat myquatY;
-		myquatY = glm::angleAxis(glm::radians(((float)(previousYpos - yPos)) / 10), glm::vec3(-1.0f, 0.0f, 0.0f));
-		selected->Rotate(myquatX, myquatY);
-		previousXpos = xPos;
-		previousYpos = yPos;
+		if (index != 255) {
+			glm::quat myquatX;
+			myquatX = glm::angleAxis(glm::radians(((float)(previousXpos - xPos)) / 10), glm::vec3(0.0f, -1.0f, 0.0f));
+			glm::quat myquatY;
+			myquatY = glm::angleAxis(glm::radians(((float)(previousYpos - yPos)) / 10), glm::vec3(-1.0f, 0.0f, 0.0f));
+			selected->Rotate(myquatX, myquatY);
+			previousXpos = xPos;
+			previousYpos = yPos;
+		}
 	}
 }
 
@@ -274,16 +280,16 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mode)
 
 		GLbyte color[4];
 		GLfloat depth;
-		GLuint index;
+		//GLuint index;
 
 		glReadPixels(previousXpos, height - previousYpos - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
 		glReadPixels(previousXpos, height - previousYpos - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
 		glReadPixels(previousXpos, height - previousYpos - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
 		printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u\n",
 			previousXpos, previousYpos, color[0], color[1], color[2], color[3], depth, index);
-		if (index != 0)
-			//SelectedObjectIndex =objects_size - index;
+		if (index != 0 && index != 255)
 			SelectedObjectIndex = index - 1;
+
 	}
 	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
 		std::cout << "Left button released" << std::endl;

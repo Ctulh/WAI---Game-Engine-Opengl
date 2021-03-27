@@ -9,13 +9,17 @@ void ObjectArray::Add(Object* obj){
 	Array.push_back(obj);
 }
 
-void ObjectArray::Add(returned& RreturnedStruct, std::string& path){
-	Array.push_back(new Object(RreturnedStruct, path));
+
+void ObjectArray::Add(returned& RreturnedStruct, std::string& path) {
+	std::string tempStringName = "Object # " + std::to_string(Array.size());
+	char* c = &tempStringName[0];
+	Array.push_back(new Object(c, RreturnedStruct, path));
 	size++;
 }
 
 void ObjectArray::Draw(Renderer &renderer) {
 	for (int i = 0; i < Array.size(); i++) {
-		Array[i]->Draw(renderer,i);
+		if(Array[i]->propirties.Visible)
+			Array[i]->Draw(renderer,i);
 	}
 }
