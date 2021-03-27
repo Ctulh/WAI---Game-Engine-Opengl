@@ -1,14 +1,14 @@
 #include "Object.h"
-//#include <string>
+#include <string>
 #include "returned.h"
 #include "Renderer.h"
 
-Object::Object(char *in_name, returned& ReturnedStruct, std::string& path)
+Object::Object(char* in_name, returned& ReturnedStruct, std::string& path)
 	:VB(ReturnedStruct.data, ReturnedStruct.Lines* ReturnedStruct.Columns * sizeof(GLfloat)),
 	shader("vertex.shader", "fragment.shader"),
 	texture(path)
 {
-	strcpy_s(Name,in_name);
+	strcpy_s(Name, in_name);
 	propirties.Visible = true;
 	//Name = in_name;
 	if (ReturnedStruct.Columns == 3)
@@ -26,10 +26,10 @@ Object::Object(char *in_name, returned& ReturnedStruct, std::string& path)
 	Matrix.View = glm::lookAt(glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
 	MVP = Matrix.Projection * Matrix.View * Matrix.Model;
-	
+
 }
 
-void Object::Draw(Renderer &renderer,const int color) {
+void Object::Draw(Renderer& renderer, const int color) {
 	//MVP = Matrix.Projection * Matrix.View * Matrix.Model;
 	//shader.SetUniformMatrix4fv("MVP", &MVP[0][0]);
 	Bind();
@@ -41,7 +41,7 @@ void Object::Translate(const glm::vec3& translation) {
 	Matrix.Model = glm::translate(Matrix.Model, translation);
 }
 
-void Object::Rotate(glm::quat& quatX, glm::quat& quatY){
+void Object::Rotate(glm::quat& quatX, glm::quat& quatY) {
 	glm::vec4 temp;
 	for (int i = 0; i < 4; i++) {
 		temp[i] = Matrix.Model[3][i];
@@ -53,9 +53,9 @@ void Object::Rotate(glm::quat& quatX, glm::quat& quatY){
 }
 
 void Object::Bind() {
-	//texture.Bind();
-	//VA.Bind();
-//	shader.Bind();
+	texture.Bind();
+	VA.Bind();
+	shader.Bind();
 	MVP = Matrix.Projection * Matrix.View * Matrix.Model;
 	shader.SetUniformMatrix4fv("MVP", &MVP[0][0]);
 }
