@@ -178,6 +178,7 @@ int main()
 				ImGui::TableSetupColumn("Visible", ImGuiTableColumnFlags_NoSort | ImGuiTableColumnFlags_WidthFixed, 0.0f, MyItemColumnID_Action);
 					ImGui::TableHeadersRow();
 					for (int i = 0; i < objects_size; i++) {
+						ImGui::PushID(i);
 						ImGui::TableNextRow();
 						ImGui::TableSetColumnIndex(0);
 						ImGui::Text(&std::to_string(i)[0]);
@@ -189,10 +190,16 @@ int main()
 								objects.Array[i]->propirties.Visible = !objects.Array[i]->propirties.Visible;
 							}
 						}
+						ImGui::PopID();
 					}
 
 			
 				ImGui::EndTable();
+			}
+			ImGui::Button("add");
+			if (ImGui::IsItemActive()) {
+				objects.Add(temp, path);
+				objects_size++;
 			}
 			ImGui::End();
 		}
