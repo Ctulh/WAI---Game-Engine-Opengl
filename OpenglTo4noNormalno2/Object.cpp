@@ -1,14 +1,16 @@
 #include "Object.h"
-#include <string>
+//#include <string>
 #include "returned.h"
 #include "Renderer.h"
 
-Object::Object(returned& ReturnedStruct, std::string& path)
+Object::Object(char *in_name, returned& ReturnedStruct, std::string& path)
 	:VB(ReturnedStruct.data, ReturnedStruct.Lines* ReturnedStruct.Columns * sizeof(GLfloat)),
 	shader("vertex.shader", "fragment.shader"),
 	texture(path)
 {
-	//Name = name;
+	strcpy_s(Name,in_name);
+	propirties.Visible = true;
+	//Name = in_name;
 	if (ReturnedStruct.Columns == 3)
 		Layout.Push<float>(3);
 	else if (ReturnedStruct.Columns == 5) {
@@ -20,7 +22,7 @@ Object::Object(returned& ReturnedStruct, std::string& path)
 	texture.Bind();
 	shader.SetUniform1i("u_Texture", 0);
 
-	Matrix.Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+	Matrix.Projection = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f);
 	Matrix.View = glm::lookAt(glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
 	MVP = Matrix.Projection * Matrix.View * Matrix.Model;
@@ -51,9 +53,9 @@ void Object::Rotate(glm::quat& quatX, glm::quat& quatY){
 }
 
 void Object::Bind() {
-	texture.Bind();
-	VA.Bind();
-	shader.Bind();
+	//texture.Bind();
+	//VA.Bind();
+//	shader.Bind();
 	MVP = Matrix.Projection * Matrix.View * Matrix.Model;
 	shader.SetUniformMatrix4fv("MVP", &MVP[0][0]);
 }
