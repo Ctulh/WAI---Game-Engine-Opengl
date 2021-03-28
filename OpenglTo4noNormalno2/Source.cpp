@@ -24,11 +24,6 @@
 #include "ObjectArray.h"
 #define fps 60
 
-
-inline const char* const BoolToString(bool b)
-{
-	return b ? "true" : "false";
-}
 enum MyItemColumnID
 {
 	MyItemColumnID_ID,
@@ -54,7 +49,7 @@ int width = 1600;
 int height = 900;
 
 GLuint index;
-Object *selected;
+Object* selected;
 
 glm::mat4 MVP;
 glm::mat4 Model;
@@ -63,7 +58,7 @@ glm::mat4 Projection;
 
 bool isobject = false;
 
-std::size_t objects_size=0;
+std::size_t objects_size = 0;
 int SelectedObjectIndex = 0;
 
 
@@ -107,20 +102,6 @@ int main()
 
 	returned temp = loadVerticiesAndUVs(pathvert, pathuv);
 
-	VertexBuffer vb_square(temp.data, temp.Columns * temp.Lines * sizeof(GLfloat));
-	//V/ertexBuffer vb_square(obj);
-
-	VertexBufferLayout layout;
-	layout.Push<float>(3);
-	layout.Push<float>(2);
-
-	unsigned int indicies[6] =
-	{
-		0,1,2,
-		2,0,3,
-	};
-
-
 
 	Shader shader("vertex.shader", "fragment.shader");
 	shader.Bind();
@@ -157,8 +138,8 @@ int main()
 		glClearStencil(0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
-		
-	
+
+
 		glEnable(GL_STENCIL_TEST);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
@@ -166,42 +147,50 @@ int main()
 		objects.Draw(renderer);
 		selected = objects.Array[SelectedObjectIndex];
 
-
+		static int selected_row = -1;
 		glStencilFunc(GL_ALWAYS, 255, 0);
 		{
 			ImGui_ImplGlfwGL3_NewFrame();
-			ImGui::Begin("Objects",NULL);
+			ImGui::Begin("Objects", NULL);
 			if (ImGui::BeginTable("##table1", 3))
 			{
 				ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_DefaultSort | ImGuiTableColumnFlags_WidthFixed | ImGuiTableColumnFlags_NoHide, 0.0f, MyItemColumnID_ID);
 				ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthFixed, 0.0f, MyItemColumnID_Name);
 				ImGui::TableSetupColumn("Visible", ImGuiTableColumnFlags_NoSort | ImGuiTableColumnFlags_WidthFixed, 0.0f, MyItemColumnID_Action);
-					ImGui::TableHeadersRow();
-					for (int i = 0; i < objects_size; i++) {
-						ImGui::PushID(i);
-						ImGui::TableNextRow();
-						ImGui::TableSetColumnIndex(0);
-						ImGui::Text(&std::to_string(i)[0]);
-						ImGui::TableSetColumnIndex(1);
-						ImGui::Text(objects.Array[i]->Name);
-						if (ImGui::TableSetColumnIndex(2))
-						{
-							if (ImGui::RadioButton("", objects.Array[i]->propirties.Visible)) {
-								objects.Array[i]->propirties.Visible = !objects.Array[i]->propirties.Visible;
-							}
+				ImGui::TableHeadersRow();
+				for (int i = 0; i < objects_size; i++) {
+					ImGui::PushID(i);
+					ImGui::TableNextRow();
+					ImGui::TableSetColumnIndex(0);
+					ImGui::Text(&std::to_string(i)[0]);
+					if (ImGui::TableSetColumnIndex(2))
+					{
+						if (ImGui::RadioButton("", objects.Array[i]->propirties.Visible)) {
+							objects.Array[i]->propirties.Visible = !objects.Array[i]->propirties.Visible;
 						}
-						ImGui::PopID();
 					}
+					ImGui::TableSetColumnIndex(1);
+					if (ImGui::Selectable(objects.Array[i]->Name, selected_row == i))
+					{
+						SelectedObjectIndex = i;
+						selected_row = i;
+					}
+					ImGui::SetItemAllowOverlap();
+					ImGui::PopID();
+				}
 
-			
+
 				ImGui::EndTable();
 			}
+			ImGui::End();
+			ImGui::Begin("Functions", NULL);
 			ImGui::Button("add");
 			if (ImGui::IsItemActive()) {
 				objects.Add(temp, path);
 				objects_size++;
 			}
 			ImGui::End();
+			
 		}
 
 
@@ -226,19 +215,8 @@ int main()
 	ImGui::DestroyContext();
 	glfwTerminate();
 }
-glm::quat myquatX;
-
-
-// if (ImGui::IsItemClicked())
-// {
-// 	objects.Add(temp, path);
-// 	//objects.Array[objects.Array.size()-1]->Translate(glm::vec3(-1.0f, 0.0f, 0.0f));
-// 	objects_size++;
-// 
-// }
 
 static void CursorPositionCallback(GLFWwindow* window, double xPos, double yPos) {
-	//if (!rotation) {
 	if (!mouse) {
 		previousXpos = xPos;
 		previousYpos = yPos;
@@ -249,7 +227,6 @@ static void CursorPositionCallback(GLFWwindow* window, double xPos, double yPos)
 		else
 			isobject = false;
 	}
-	
 	else if (mouse) {
 		if (index != 255) {
 			glm::quat myquatX;
@@ -262,8 +239,6 @@ static void CursorPositionCallback(GLFWwindow* window, double xPos, double yPos)
 		}
 	}
 }
-
-
 
 void mouseButtonCallback(GLFWwindow* window, int button, int action, int mode)
 {
@@ -279,9 +254,6 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mode)
 		glReadPixels(previousXpos, height - previousYpos - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
 		printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u\n",
 			previousXpos, previousYpos, color[0], color[1], color[2], color[3], depth, index);
-		if (index != 0 && index!=255)
-			SelectedObjectIndex = index - 1;
-
 	}
 	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
 		std::cout << "Left button released" << std::endl;
