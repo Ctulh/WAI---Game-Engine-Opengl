@@ -8,7 +8,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include <time.h>
 
-#include "returned.h"
+#include "Structures.h"
 #include "Loader.h"
 //#include "VertexBuffer.h"
 #include "VertexArray.h"
@@ -99,9 +99,11 @@ int main()
 
 	std::string pathvert = ("C:/Users/pilni/Desktop/OpenglTo4noNormalno2/OpenglTo4noNormalno2/res/objects/coords_shape/cube.wai");
 	std::string pathuv = ("C:/Users/pilni/Desktop/OpenglTo4noNormalno2/OpenglTo4noNormalno2/res/objects/coords_uv/cubeUV.wai");
+	std::string pathArrow = ("C:/Users/pilni/Desktop/OpenglTo4noNormalno2/OpenglTo4noNormalno2/res/objects/coords_shape/square.wai");
+
 
 	returned temp = loadVerticiesAndUVs(pathvert, pathuv);
-
+	returned tempArrow = loadVerticiess(pathArrow);
 
 	Shader shader("vertex.shader", "fragment.shader");
 	shader.Bind();
@@ -123,16 +125,29 @@ int main()
 	glm::vec3 scale = glm::vec3(1.0f);
 
 	std::string path = "res/picture1.png";
-	std::string path2 = "res/picture1.png";
+	std::string path2 = "res/clear.png";
 
+	Texture text(path2);
 	double lasttime = glfwGetTime();
 	glm::vec3 prevscale;
 	glm::mat4 ModelNew = Model;
-
+	
 	ObjectArray objects;
 	objects.Add(temp, path);
 	objects_size++;
 	bool visible = true;
+
+	Model = glm::mat4(1.0f);
+	View = glm::lookAt(glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	Projection = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f);
+	MVP = Projection * View * Model;
+
+
+	glm::mat4 Model_N = glm::mat4(1.0f);
+	glm::mat4 View_N = glm::lookAt(glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glm::mat4 Projection_N = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f);
+	glm::mat4 MVP_N = Projection_N * View_N * Model_N;
+
 
 	do {
 		glClearStencil(0);
@@ -143,11 +158,10 @@ int main()
 		glEnable(GL_STENCIL_TEST);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-
-		objects.Draw(renderer);
 		selected = objects.Array[SelectedObjectIndex];
+		objects.Draw(renderer);
 
-		static int selected_row = -1;
+		static int selected_row = 0;
 		glStencilFunc(GL_ALWAYS, 255, 0);
 		{
 			ImGui_ImplGlfwGL3_NewFrame();
@@ -165,8 +179,8 @@ int main()
 					ImGui::Text(&std::to_string(i)[0]);
 					if (ImGui::TableSetColumnIndex(2))
 					{
-						if (ImGui::RadioButton("", objects.Array[i]->propirties.Visible)) {
-							objects.Array[i]->propirties.Visible = !objects.Array[i]->propirties.Visible;
+						if (ImGui::RadioButton("", objects.Array[i]->properties.Visible)) {
+							objects.Array[i]->properties.Visible = !objects.Array[i]->properties.Visible;
 						}
 					}
 					ImGui::TableSetColumnIndex(1);
@@ -182,15 +196,22 @@ int main()
 
 				ImGui::EndTable();
 			}
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 			ImGui::End();
 			ImGui::Begin("Functions", NULL);
-			ImGui::Button("add");
-			if (ImGui::IsItemActive()) {
+			ImGui::Button("Add Cube");
+			if (ImGui::IsItemDeactivated()) {
 				objects.Add(temp, path);
 				objects_size++;
 			}
 			ImGui::End();
 			
+			ImGui::Begin("Properties", NULL);
+			ImGui::Checkbox("Texture", &selected->properties.Texture);
+			
+			ImGui::End();
+
+
 		}
 
 

@@ -32,6 +32,9 @@ public:
 	VertexBufferLayout()
 		:m_Stride(0) {}
 	
+	int size() {
+		return m_Elements.size();
+	}
 
 	template<typename T>
 	void Pop()

@@ -1,4 +1,3 @@
-
 #include "VertexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
@@ -6,25 +5,24 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/glm.hpp>
-#include "returned.h"
+#include "Structures.h"
 #include "Texture.h"
 #include <string>
 
 struct Matricies
 {
 	glm::mat4 Model;
-	glm::mat4 View;
 	glm::mat4 Projection;
 	Matricies()
 		:Model(1.0f),
-		 View(1.0f),
 		 Projection(1.0f)
 	{}
 };
 
 struct Properties{
 	bool Visible;
-
+	bool Texture;
+	int Texture_ID;
 };
 
 
@@ -32,18 +30,17 @@ class Object
 {
 public:
 	char Name[16];
-	Texture texture;
+	int TextureIndex;
 	VertexBuffer VB;
 	VertexBufferLayout Layout;
 	VertexArray VA;
-	Shader shader;
 	Matricies Matrix;
 	glm::mat4 MVP;
-	Properties propirties;
+	Properties properties;
 
-	Object(char *in_name,returned &RreturnedStruct,std::string &path);
-	void Draw(Renderer &renderer,const int color);
+	Object(char *in_name,returned &RreturnedStruct,int _index);
+	void Draw(Renderer &renderer, Shader &shader,const int color, const glm::mat4& View);
 	void Rotate(glm::quat& quatX, glm::quat& quatY);
 	void Translate(const glm::vec3& translation);
-	void Bind();
+	void Bind(const glm::mat4& View, Shader &shader);
 };

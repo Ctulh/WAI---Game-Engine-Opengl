@@ -34,7 +34,6 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
 }
 void Renderer::DrawVB(const VertexArray& va, const Shader& shader,const int color) const
 {
-	
 	shader.Bind();
 	va.Bind();
 	//std::cout << "Renderer set " << color + 1 << std::endl;

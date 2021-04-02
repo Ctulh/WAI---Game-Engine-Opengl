@@ -1,7 +1,12 @@
 
 #include <vector>
+//#include "TextureArray.h"
 #include "Renderer.h"
-#include "returned.h"
+#include "Structures.h"
+#include "TextureArray.h"
+#include <glm/glm.hpp>
+#include "Shader.h"
+
 
 class Object;
 
@@ -9,10 +14,14 @@ class ObjectArray
 {
 public:
 	std::vector<Object*> Array;
+	TextureArray textureArray;
+	Shader shader;
 	std::size_t size;
+	glm::mat4 Camera;
 
 	ObjectArray();
-	void Add(Object *obj);
+	//void Add(Object *obj);
 	void Add(returned& RreturnedStruct, std::string& path);
 	void Draw(Renderer& renderer);
+	void SetView(const glm::mat4& view);
 };
