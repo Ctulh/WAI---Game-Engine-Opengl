@@ -36,11 +36,18 @@ public:
 	VertexArray VA;
 	Matricies Matrix;
 	glm::mat4 MVP;
+	glm::vec4 Color;
 	Properties properties;
+	ModelConstituent ModelComponents;
+	glm::mat4 OriginalModel;
+	bool Changes;
 
 	Object(char *in_name,returned &RreturnedStruct,int _index);
 	void Draw(Renderer &renderer, Shader &shader,const int color, const glm::mat4& View);
 	void Rotate(glm::quat& quatX, glm::quat& quatY);
 	void Translate(const glm::vec3& translation);
+	void Translate();
+	void Scale(glm::vec3& newvec);
 	void Bind(const glm::mat4& View, Shader &shader);
+
 };

@@ -1,7 +1,10 @@
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 #include "Texture.h"
 #include <vector>
 #include <string>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 #pragma once
 
 
@@ -23,3 +26,17 @@ struct returned
 	int Columns;
 	GLfloat* data;
 };
+
+
+
+struct ModelConstituent
+{
+	glm::vec3 Translation;
+	glm::vec3 Scale;
+	ModelConstituent()
+		:Translation(0.0f),
+		 Scale(1.0f)
+	{
+	}
+};
+

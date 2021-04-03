@@ -6,7 +6,10 @@
 Object::Object(char* in_name, returned& ReturnedStruct, int _index)
 	:VB(ReturnedStruct.data, ReturnedStruct.Lines* ReturnedStruct.Columns * sizeof(GLfloat)),
 	TextureIndex(_index),
-	MVP(glm::mat4(1.0f))
+	MVP(glm::mat4(1.0f)),
+	Color(glm::vec4(1.0f)),
+	Changes(true),
+	OriginalModel(1.0f)
 {
 	strcpy_s(Name, in_name);
 	properties.Visible = true;
@@ -31,18 +34,34 @@ void Object::Draw(Renderer& renderer, Shader &shader, const int color, const glm
 
 
 void Object::Translate(const glm::vec3& translation) {
-	Matrix.Model = glm::translate(Matrix.Model, translation);
+	for (int i = 0; i < 3; i++)
+	{
+		Matrix.Model[3][i] = translation[i];
+	}
+	Changes = true;
+}
+
+void Object::Translate() {
+	for (int i = 0; i < 3; i++)
+	{
+		Matrix.Model[3][i] = ModelComponents.Translation[i];
+	}
+	Changes = true;
+}
+
+
+void Object::Scale(glm::vec3 &newvec){
+	Matrix.Model = glm::scale(Matrix.Model, newvec / ModelComponents.Scale);
+	ModelComponents.Scale = newvec;
+	Changes = true;
+	
 }
 
 void Object::Rotate(glm::quat& quatX, glm::quat& quatY) {
-	glm::vec4 temp;
-	for (int i = 0; i < 4; i++) {
-		temp[i] = Matrix.Model[3][i];
-	}
 	Matrix.Model = glm::toMat4(quatX * quatY) * Matrix.Model;
-	for (int i = 0; i < 4; i++) {
-		Matrix.Model[3][i] = temp[i];
-	}
+	Translate();
+	//Matrix.Model = OriginalModel;
+	Changes = true;
 }
 
 void Object::Bind(const glm::mat4& View, Shader &shader) {
@@ -51,10 +70,13 @@ void Object::Bind(const glm::mat4& View, Shader &shader) {
 		shader.SetUniform1i("u_Texture", TextureIndex);
 	}
 	else {
-		shader.SetUniform4f("u_Color", 1.0f, 0.0f, 1.0f, 1.0f);
+		shader.SetUniform4f("u_Color", Color[0],Color[1],Color[2],Color[3]);
 		shader.SetUniform1i("u_Texture", 0);
 	}
 	VA.Bind();
-	MVP = Matrix.Projection * View * Matrix.Model;
+	if (Changes) {
+		MVP = Matrix.Projection * View * Matrix.Model;
+		Changes = false;
+	}
 	shader.SetUniformMatrix4fv("MVP", &MVP[0][0]);
 }

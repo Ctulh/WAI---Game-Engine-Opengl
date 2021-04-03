@@ -148,7 +148,7 @@ int main()
 	glm::mat4 Projection_N = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f);
 	glm::mat4 MVP_N = Projection_N * View_N * Model_N;
 
-
+	glm::vec3 DragScale(1.0f);
 	do {
 		glClearStencil(0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -188,6 +188,7 @@ int main()
 					{
 						SelectedObjectIndex = i;
 						selected_row = i;
+						DragScale = objects.Array[selected_row]->ModelComponents.Scale;
 					}
 					ImGui::SetItemAllowOverlap();
 					ImGui::PopID();
@@ -196,6 +197,7 @@ int main()
 
 				ImGui::EndTable();
 			}
+			
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 			ImGui::End();
 			ImGui::Begin("Functions", NULL);
@@ -207,8 +209,39 @@ int main()
 			ImGui::End();
 			
 			ImGui::Begin("Properties", NULL);
-			ImGui::Checkbox("Texture", &selected->properties.Texture);
-			
+
+			if (ImGui::BeginTabBar("MyTabBar", ImGuiTabBarFlags_None))
+			{
+				if (ImGui::BeginTabItem("Basic"))
+				{
+					ImGui::Text("Working");
+					ImGui::EndTabItem();
+				}
+				if (ImGui::BeginTabItem("Coloring"))
+				{
+					ImGui::Checkbox("Texture", &selected->properties.Texture);
+					if (!selected->properties.Texture) {
+						ImGui::Text("Color widget:");
+						ImGuiColorEditFlags misc_flags = (ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_AlphaPreviewHalf);
+						ImGui::ColorEdit3("MyColor##1", (float*)&selected->Color, misc_flags);
+					}
+					ImGui::EndTabItem();
+				}
+				if (ImGui::BeginTabItem("Coords"))
+				{
+					ImGui::DragFloat3("Translation", &selected->ModelComponents.Translation.x, 0.05f, 0.05f, 0.05f);
+					if (ImGui::IsItemEdited()) {
+						selected->Translate();
+					}
+					ImGui::DragFloat3("Scale", &DragScale.x, 0.05f, 0.05f, FLT_MAX, "%.3f");
+					if (ImGui::IsItemEdited()) {
+						selected->Scale(DragScale);
+					}
+
+					ImGui::EndTabItem();
+				}
+				ImGui::EndTabBar();
+			}
 			ImGui::End();
 
 
