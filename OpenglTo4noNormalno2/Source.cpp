@@ -159,21 +159,6 @@ int main()
 		-1,0,1,
 		1,0,1,
 	};
-	//Texture clearT(path2);
-	//clearT.Bind(0);
-	//glm::vec3 Top = { triangle[0],triangle[1], triangle[2] };
-	//glm::vec3 Left = { triangle[3],triangle[4], triangle[5] };
-	//glm::vec3 Right = { triangle[6],triangle[7], triangle[8] };
-// 	GLfloat* data = DivideTriangle(Top, Left, Right);
-// 	VertexBuffer vb_triangle(Normalize(data,36,1), 9*4*sizeof(GLfloat));
-// 	VertexBufferLayout la;
-// 	la.Push<float>(3);
-// 	VertexArray va_triangle;
-// 	va_triangle.AddBuffer(vb_triangle, la);
-// 	shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-// 	shader.SetUniform1i("u_Texture",0);
-// 	shader.SetUniformMatrix4fv("MVP", &MVP[0][0]);
-	//Ball b;
 	glm::vec3 DragScale(1.0f);
 	do {
 		glClearStencil(0);
