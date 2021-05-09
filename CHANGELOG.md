@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### How is drawing "Sphere of the first order" works
 ![](OctahedronToSphere)
 ![Uzoma Medium Gif](https://media.giphy.com/media/xEVDqEJZ1U64IwhNzW/giphy.gif)
+
 First of all Octahedron verticies are loaded from [ball.wai](https://github.com/Ctulh/WAI---Opengl-CubeViewer/blob/master/OpenglTo4noNormalno2/res/objects/coords_shape/ball.wai), then every side(triangle) procedurial divided into 4 smaller traingles after these actions to all sides called function.
 ```c++
 GLfloat* Normalize(GLfloat* _inArray, int count, double radius);
