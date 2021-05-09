@@ -1,4 +1,4 @@
-# WAI---3d-Game-Engine
+# WAI-Game-Engine
 
 ~~The project was closed because~~ 
 **The project is not closed**
