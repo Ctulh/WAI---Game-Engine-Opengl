@@ -2,13 +2,14 @@
 #include <vector>
 #include <string>
 #include "Structures.h"
-
+#pragma once
 class TextureArray {
 public:
 	std::vector<TextureObj*> TextureArr;
 	TextureArray();
 	~TextureArray();
 	int Add(const std::string& path);
+/*	int AddNonRef(const std::string path);*/
 	//void Delete(const int index);
 
 };

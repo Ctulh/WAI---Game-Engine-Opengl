@@ -27,6 +27,23 @@ Object::Object(char* in_name, returned& ReturnedStruct, int _index)
 }
 
 
+Object::Object(char* in_name, GLfloat* data,int _index)
+	:VB(data, 1152* sizeof(GLfloat)),
+	TextureIndex(_index),
+	MVP(glm::mat4(1.0f)),
+	Color(glm::vec4(1.0f)),
+	Changes(true),
+	OriginalModel(1.0f)
+{
+	strcpy_s(Name, in_name);
+	properties.Visible = true;
+	properties.Texture = true;
+	
+	Layout.Push<float>(3);
+	VA.AddBuffer(VB, Layout);
+	Matrix.Projection = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f);
+}
+
 void Object::Draw(Renderer& renderer, Shader &shader, const int color, const glm::mat4& View) {
 	Bind(View,shader);
 	renderer.DrawVB(VA, shader, color);
