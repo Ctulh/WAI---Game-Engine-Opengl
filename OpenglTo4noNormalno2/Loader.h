@@ -3,10 +3,10 @@
 #include <sstream>
 #include "GL/glew.h"
 #include "Structures.h"
+#pragma once
+
+
 int count = 0;
-
-
-
 GLfloat* lineTodigigtss(std::string str) {
 	bool minus = false;
 	int counter = 0;
@@ -28,7 +28,7 @@ GLfloat* lineTodigigtss(std::string str) {
 	return returned;
 }
 
-returned loadVerticiess(const std::string& path)
+returned loadVerticiess(const std::string path)
 {
 	std::cout << std::endl << "Loader:: loading verticies coords. Path: " << path;
 	count = 0;
@@ -64,6 +64,8 @@ returned loadVerticiess(const std::string& path)
 	temp.data = vertexArray;
 	return temp;
 }
+
+
 
 
 void unLoadUV(GLfloat* vertexArray)

@@ -42,7 +42,8 @@ public:
 	glm::mat4 OriginalModel;
 	bool Changes;
 
-	Object(char *in_name,returned &RreturnedStruct,int _index);
+	Object(char* in_name, returned& RreturnedStruct, int _index);
+	Object(char* in_name, GLfloat* data, int _index);
 	void Draw(Renderer &renderer, Shader &shader,const int color, const glm::mat4& View);
 	void Rotate(glm::quat& quatX, glm::quat& quatY);
 	void Translate(const glm::vec3& translation);

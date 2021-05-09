@@ -21,6 +21,28 @@ void ObjectArray::Add(returned& RreturnedStruct, std::string& path) {
 	size++;
 }
 
+void ObjectArray::Add(Shape* shapeStruct,std::string& path)
+{
+	std::string tempStringName = "Object # " + std::to_string(Array.size());
+	char* c = &tempStringName[0];
+	Array.push_back(new Object(c,shapeStruct->data, textureArray.Add(path)));
+	size++;
+}
+
+void ObjectArray::Add(types type,std::string& path)
+{
+	switch (type)
+	{
+	case SPHERE:
+		Add(new Sphere(),path);
+		break;
+	case CUBE:
+		break;
+	default:
+		break;
+	}
+}
+
 void ObjectArray::Draw(Renderer& renderer) {
 	shader.Bind();
 	for (int i = 0; i < Array.size(); i++) {

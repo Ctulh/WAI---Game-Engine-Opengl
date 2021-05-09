@@ -26,5 +26,8 @@ int TextureArray::Add(const std::string& _path) {
 		return TextureArr.size() - 1;
 	}
 	else
+		for (int i = 0; i < TextureArr.size(); i++)
+			TextureArr[i]->texture.Bind(TextureArr[i]->texture_ID);
 		return SearchPath(_path, TextureArr);
 }
+

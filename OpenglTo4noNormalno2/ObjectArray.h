@@ -6,7 +6,8 @@
 #include "TextureArray.h"
 #include <glm/glm.hpp>
 #include "Shader.h"
-
+#include "Shape.h"
+#pragma once
 
 class Object;
 
@@ -22,6 +23,8 @@ public:
 	ObjectArray();
 	//void Add(Object *obj);
 	void Add(returned& RreturnedStruct, std::string& path);
+	void Add(Shape *shapeStruct,std::string& path);
+	void Add(types type,std::string& path);
 	void Draw(Renderer& renderer);
 	void SetView(const glm::mat4& view);
 };

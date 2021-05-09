@@ -10,6 +10,7 @@
 
 #include "Structures.h"
 #include "Loader.h"
+
 //#include "VertexBuffer.h"
 #include "VertexArray.h"
 #include "Texture.h"
@@ -22,6 +23,9 @@
 #include "stb_image.h"
 #include "Renderer.h"
 #include "ObjectArray.h"
+//#include "Shape.h"
+
+
 #define fps 60
 
 enum MyItemColumnID
@@ -97,9 +101,9 @@ int main()
 	}
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-	std::string pathvert = ("C:/Users/pilni/Desktop/OpenglTo4noNormalno2/OpenglTo4noNormalno2/res/objects/coords_shape/cube.wai");
-	std::string pathuv = ("C:/Users/pilni/Desktop/OpenglTo4noNormalno2/OpenglTo4noNormalno2/res/objects/coords_uv/cubeUV.wai");
-	std::string pathArrow = ("C:/Users/pilni/Desktop/OpenglTo4noNormalno2/OpenglTo4noNormalno2/res/objects/coords_shape/square.wai");
+	std::string pathvert = ("C:/Users/Leather Man/source/repos/WAI---Opengl-CubeViewer/OpenglTo4noNormalno2/res/objects/coords_shape/cube.wai");
+	std::string pathuv = ("C:/Users/Leather Man/source/repos/WAI---Opengl-CubeViewer/OpenglTo4noNormalno2/res/objects/coords_uv/cubeUV.wai");
+	std::string pathArrow = ("C:/Users/Leather Man/source/repos/WAI---Opengl-CubeViewer/OpenglTo4noNormalno2/res/objects/coords_shape/square.wai");
 
 
 	returned temp = loadVerticiesAndUVs(pathvert, pathuv);
@@ -127,27 +131,49 @@ int main()
 	std::string path = "res/picture1.png";
 	std::string path2 = "res/clear.png";
 
-	Texture text(path2);
+	//Texture text(path2);
 	double lasttime = glfwGetTime();
 	glm::vec3 prevscale;
 	glm::mat4 ModelNew = Model;
 	
 	ObjectArray objects;
-	objects.Add(temp, path);
-	objects_size++;
+	
+	//objects_size++;
 	bool visible = true;
+	
+	
+	//objects.Add(temp, path);
+	objects.Add(SPHERE,path2);
+	objects_size++;
+
+
 
 	Model = glm::mat4(1.0f);
 	View = glm::lookAt(glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	Projection = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f);
 	MVP = Projection * View * Model;
 
-
-	glm::mat4 Model_N = glm::mat4(1.0f);
-	glm::mat4 View_N = glm::lookAt(glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	glm::mat4 Projection_N = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f);
-	glm::mat4 MVP_N = Projection_N * View_N * Model_N;
-
+	GLfloat triangle[] =
+	{
+		0,1,0,
+		-1,0,1,
+		1,0,1,
+	};
+	//Texture clearT(path2);
+	//clearT.Bind(0);
+	//glm::vec3 Top = { triangle[0],triangle[1], triangle[2] };
+	//glm::vec3 Left = { triangle[3],triangle[4], triangle[5] };
+	//glm::vec3 Right = { triangle[6],triangle[7], triangle[8] };
+// 	GLfloat* data = DivideTriangle(Top, Left, Right);
+// 	VertexBuffer vb_triangle(Normalize(data,36,1), 9*4*sizeof(GLfloat));
+// 	VertexBufferLayout la;
+// 	la.Push<float>(3);
+// 	VertexArray va_triangle;
+// 	va_triangle.AddBuffer(vb_triangle, la);
+// 	shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+// 	shader.SetUniform1i("u_Texture",0);
+// 	shader.SetUniformMatrix4fv("MVP", &MVP[0][0]);
+	//Ball b;
 	glm::vec3 DragScale(1.0f);
 	do {
 		glClearStencil(0);
@@ -158,9 +184,13 @@ int main()
 		glEnable(GL_STENCIL_TEST);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-		selected = objects.Array[SelectedObjectIndex];
-		objects.Draw(renderer);
-
+	selected = objects.Array[SelectedObjectIndex];
+	objects.Draw(renderer);
+// 		Model = glm::rotate(Model,glm::radians(1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+// 		MVP = Projection * View * Model;
+// 		shader.SetUniformMatrix4fv("MVP", &MVP[0][0]);
+// 		shader.Bind();
+		//renderer.DrawVB(va_triangle, shader,1);
 		static int selected_row = 0;
 		glStencilFunc(GL_ALWAYS, 255, 0);
 		{
@@ -204,6 +234,11 @@ int main()
 			ImGui::Button("Add Cube");
 			if (ImGui::IsItemDeactivated()) {
 				objects.Add(temp, path);
+				objects_size++;
+			}
+			ImGui::Button("Add SPhere");
+			if (ImGui::IsItemDeactivated()) {
+				objects.Add(SPHERE,path2);
 				objects_size++;
 			}
 			ImGui::End();

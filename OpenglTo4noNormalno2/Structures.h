@@ -27,6 +27,10 @@ struct returned
 	GLfloat* data;
 };
 
+enum types {
+	SPHERE, CUBE
+};
+
 
 
 struct ModelConstituent
