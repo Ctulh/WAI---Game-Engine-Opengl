@@ -40,6 +40,7 @@ void ObjectArray::Add(types type,std::string& path)
 		break;
 	default:
 		break;
+
 	}
 }
 

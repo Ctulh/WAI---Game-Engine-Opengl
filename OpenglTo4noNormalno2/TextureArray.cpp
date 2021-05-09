@@ -1,6 +1,7 @@
 #include "Structures.h"
 #include "TextureArray.h"
 
+
 TextureArray::TextureArray()
 {
 	TextureArr.push_back(new TextureObj(0,"res/clear.png"));

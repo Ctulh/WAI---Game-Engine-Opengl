@@ -31,8 +31,6 @@ enum types {
 	SPHERE, CUBE
 };
 
-
-
 struct ModelConstituent
 {
 	glm::vec3 Translation;

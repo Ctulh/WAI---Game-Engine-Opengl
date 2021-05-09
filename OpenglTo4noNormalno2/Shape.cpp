@@ -56,12 +56,6 @@ GLfloat* DivideTriangleFromReturned(const returned ReturnedStruct) {
 	for (int j=0; j < 36; j++) {
 		Array[i * 36 + j] = temp[j];
 	}
-	//delete[] temp;
-	}
-	for (int i = 0; i < 72; i++) {
-		std::cout << Array[i]<<" ";
-		if (i % 3 == 0)
-			std::cout << std::endl;
 	}
 	return Array;
 }

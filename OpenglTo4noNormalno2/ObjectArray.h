@@ -21,7 +21,6 @@ public:
 	glm::mat4 Camera;
 
 	ObjectArray();
-	//void Add(Object *obj);
 	void Add(returned& RreturnedStruct, std::string& path);
 	void Add(Shape *shapeStruct,std::string& path);
 	void Add(types type,std::string& path);

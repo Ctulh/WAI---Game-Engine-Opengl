@@ -8,8 +8,7 @@ Object::Object(char* in_name, returned& ReturnedStruct, int _index)
 	TextureIndex(_index),
 	MVP(glm::mat4(1.0f)),
 	Color(glm::vec4(1.0f)),
-	Changes(true),
-	OriginalModel(1.0f)
+	Changes(true)
 {
 	strcpy_s(Name, in_name);
 	properties.Visible = true;
@@ -32,8 +31,7 @@ Object::Object(char* in_name, GLfloat* data,int _index)
 	TextureIndex(_index),
 	MVP(glm::mat4(1.0f)),
 	Color(glm::vec4(1.0f)),
-	Changes(true),
-	OriginalModel(1.0f)
+	Changes(true)
 {
 	strcpy_s(Name, in_name);
 	properties.Visible = true;
@@ -77,7 +75,6 @@ void Object::Scale(glm::vec3 &newvec){
 void Object::Rotate(glm::quat& quatX, glm::quat& quatY) {
 	Matrix.Model = glm::toMat4(quatX * quatY) * Matrix.Model;
 	Translate();
-	//Matrix.Model = OriginalModel;
 	Changes = true;
 }
 

@@ -9,9 +9,6 @@ public:
 	TextureArray();
 	~TextureArray();
 	int Add(const std::string& path);
-/*	int AddNonRef(const std::string path);*/
-	//void Delete(const int index);
-
 };
 
 

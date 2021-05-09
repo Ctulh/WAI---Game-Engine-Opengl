@@ -171,11 +171,6 @@ int main()
 
 	selected = objects.Array[SelectedObjectIndex];
 	objects.Draw(renderer);
-// 		Model = glm::rotate(Model,glm::radians(1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-// 		MVP = Projection * View * Model;
-// 		shader.SetUniformMatrix4fv("MVP", &MVP[0][0]);
-// 		shader.Bind();
-		//renderer.DrawVB(va_triangle, shader,1);
 		static int selected_row = 0;
 		glStencilFunc(GL_ALWAYS, 255, 0);
 		{

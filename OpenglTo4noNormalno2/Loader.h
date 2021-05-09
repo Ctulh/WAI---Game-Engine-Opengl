@@ -44,10 +44,7 @@ returned loadVerticiess(const std::string path)
 		i++;
 	}
 	GLfloat* vertexArray = new GLfloat[count * 3];
-	//vertexArray[0] = count;
 	GLfloat* temparr = new GLfloat[3];
-	//	vertexArray[0] = count;
-		//vertexArray[2] = 0;
 	int counter = 0;
 	while (getline(file, line)) {
 		temparr = lineTodigigtss(line);
@@ -56,7 +53,6 @@ returned loadVerticiess(const std::string path)
 			counter++;
 		}
 	}
-	//vertexArray[1] = (counter - 3) / count;
 	file.close();
 	returned temp;
 	temp.Lines = count;

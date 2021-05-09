@@ -1,7 +1,6 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include "Structures.h"
-//#include "Loader.h"
 #pragma once
 
 GLfloat* DivideTriangle(const glm::vec3 Top, const glm::vec3 Left, const glm::vec3 Right);
@@ -12,7 +11,6 @@ class Shape {
 public:
 	GLfloat* data;
 	std::size_t vertex_count;
-/*	types type;*/
 public: Shape(GLfloat* _data, std::size_t _vertex_count);
 	  ~Shape();
 };
