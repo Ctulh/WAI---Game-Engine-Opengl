@@ -1,7 +1,6 @@
 # WAI-Game-Engine
 
-~~The project was closed because~~ 
-**The project is not closed**
+**The project is closed**
 # [CHANGELOG](https://github.com/Ctulh/WAI---Opengl-CubeViewer/blob/master/CHANGELOG.md)
 
 # Getting Started
