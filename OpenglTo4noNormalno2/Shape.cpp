@@ -48,14 +48,14 @@ GLfloat* DivideTriangle(const glm::vec3 Top, const glm::vec3 Left, const glm::ve
 GLfloat* DivideTriangleFromReturned(const returned ReturnedStruct) {
 	GLfloat* Array = new GLfloat[1152];
 	for (int i = 0; i < 8; i++) {
-	GLfloat* temp =	DivideTriangle(
-			glm::vec3(ReturnedStruct.data[i*9], ReturnedStruct.data[i*9+1], ReturnedStruct.data[i * 9 + 2]),
+		GLfloat* temp = DivideTriangle(
+			glm::vec3(ReturnedStruct.data[i * 9], ReturnedStruct.data[i * 9 + 1], ReturnedStruct.data[i * 9 + 2]),
 			glm::vec3(ReturnedStruct.data[i * 9 + 3], ReturnedStruct.data[i * 9 + 4], ReturnedStruct.data[i * 9 + 5]),
 			glm::vec3(ReturnedStruct.data[i * 9 + 6], ReturnedStruct.data[i * 9 + 7], ReturnedStruct.data[i * 9 + 8])
 		);
-	for (int j=0; j < 36; j++) {
-		Array[i * 36 + j] = temp[j];
-	}
+		for (int j = 0; j < 36; j++) {
+			Array[i * 36 + j] = temp[j];
+		}
 	}
 	return Array;
 }
@@ -83,7 +83,7 @@ Shape::Shape(GLfloat* _data, std::size_t _vertex_count)
 	:data(_data),
 	vertex_count(_vertex_count)
 {
-	std::cout<<std::endl << vertex_count;
+	std::cout << std::endl << vertex_count;
 }
 Shape::~Shape() { delete[] data; }
 
@@ -97,5 +97,5 @@ Sphere::Sphere(returned ReturnedStruct)
 
 
 Sphere::Sphere()
-	:Sphere(loadVerticiess("C:/Users/Leather Man/source/repos/WAI---Opengl-CubeViewer/OpenglTo4noNormalno2/res/objects/coords_shape/ball.wai"))
+	:Sphere(loadVerticiess("res/objects/coords_shape/ball.wai"))
 {};

@@ -101,9 +101,9 @@ int main()
 	}
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-	std::string pathvert = ("C:/Users/Leather Man/source/repos/WAI---Opengl-CubeViewer/OpenglTo4noNormalno2/res/objects/coords_shape/cube.wai");
-	std::string pathuv = ("C:/Users/Leather Man/source/repos/WAI---Opengl-CubeViewer/OpenglTo4noNormalno2/res/objects/coords_uv/cubeUV.wai");
-	std::string pathArrow = ("C:/Users/Leather Man/source/repos/WAI---Opengl-CubeViewer/OpenglTo4noNormalno2/res/objects/coords_shape/square.wai");
+	std::string pathvert = ("res/objects/coords_shape/cube.wai");
+	std::string pathuv = ("res/objects/coords_uv/cubeUV.wai");
+	std::string pathArrow = ("res/objects/coords_shape/square.wai");
 
 
 	returned temp = loadVerticiesAndUVs(pathvert, pathuv);
@@ -135,15 +135,15 @@ int main()
 	double lasttime = glfwGetTime();
 	glm::vec3 prevscale;
 	glm::mat4 ModelNew = Model;
-	
+
 	ObjectArray objects;
-	
+
 	//objects_size++;
 	bool visible = true;
-	
-	
+
+
 	//objects.Add(temp, path);
-	objects.Add(SPHERE,path2);
+	objects.Add(SPHERE, path2);
 	objects_size++;
 
 
@@ -169,8 +169,8 @@ int main()
 		glEnable(GL_STENCIL_TEST);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-	selected = objects.Array[SelectedObjectIndex];
-	objects.Draw(renderer);
+		selected = objects.Array[SelectedObjectIndex];
+		objects.Draw(renderer);
 		static int selected_row = 0;
 		glStencilFunc(GL_ALWAYS, 255, 0);
 		{
@@ -207,7 +207,7 @@ int main()
 
 				ImGui::EndTable();
 			}
-			
+
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 			ImGui::End();
 			ImGui::Begin("Functions", NULL);
@@ -218,11 +218,16 @@ int main()
 			}
 			ImGui::Button("Add SPhere");
 			if (ImGui::IsItemDeactivated()) {
-				objects.Add(SPHERE,path2);
+				objects.Add(SPHERE, path2);
 				objects_size++;
 			}
+			ImGui::Text("AddSphere");
+			ImGui::Text("has");
+			ImGui::Text("Many Problems!");
+
+
 			ImGui::End();
-			
+
 			ImGui::Begin("Properties", NULL);
 
 			if (ImGui::BeginTabBar("MyTabBar", ImGuiTabBarFlags_None))

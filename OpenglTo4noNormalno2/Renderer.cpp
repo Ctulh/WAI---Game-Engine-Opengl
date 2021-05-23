@@ -36,15 +36,7 @@ void Renderer::DrawVB(const VertexArray& va, const Shader& shader,const int colo
 {
 	shader.Bind();
 	va.Bind();
-	//std::cout << "Renderer set " << color + 1 << std::endl;
 	glStencilFunc(GL_ALWAYS, color + 1, 0);
-	GLCall(glDrawArrays(GL_TRIANGLES, 0, va.GetSize()/sizeof(GLfloat)));
+	glDrawArrays(GL_TRIANGLES, 0, va.GetSize()/sizeof(GLfloat));
+	va.UnBind();
 }
-
-// void Renderer::DrawObjectArray(const ObjectArray& obj) const {
-// 	for (int i = 0; i < obj.size; i++){
-// 		obj.Array[i].Bind();
-// 		glStencilFunc(GL_ALWAYS, i + 1, -1);
-// 		GLCall(glDrawArrays(GL_TRIANGLES, 0, obj.Array[i].VA.GetSize() / sizeof(GLfloat)));
-// 	}
-// }

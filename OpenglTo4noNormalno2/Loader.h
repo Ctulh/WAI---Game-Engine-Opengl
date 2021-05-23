@@ -133,7 +133,3 @@ void show(int layout, GLfloat* vertexArray) {
 			std::cout << std::endl;
 	}
 }
-
-
-
-

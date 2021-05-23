@@ -12,7 +12,7 @@ public:
 	GLfloat* data;
 	std::size_t vertex_count;
 public: Shape(GLfloat* _data, std::size_t _vertex_count);
-	  ~Shape();
+	~Shape();
 };
 
 
@@ -21,6 +21,7 @@ public:	int detail_Level;
 	glm::vec3 Center;
 	Sphere();
 	Sphere(returned ReturnedStruct);
+	Sphere(GLfloat* arr);
     
 	
 };

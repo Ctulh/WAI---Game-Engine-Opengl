@@ -1,4 +1,3 @@
-
 #include <vector>
 //#include "TextureArray.h"
 #include "Renderer.h"
@@ -22,8 +21,8 @@ public:
 
 	ObjectArray();
 	void Add(returned& RreturnedStruct, std::string& path);
-	void Add(Shape *shapeStruct,std::string& path);
-	void Add(types type,std::string& path);
+	void Add(Shape* shapeStruct, std::string& path);
+	void Add(types type, std::string& path);
 	void Draw(Renderer& renderer);
 	void SetView(const glm::mat4& view);
 };

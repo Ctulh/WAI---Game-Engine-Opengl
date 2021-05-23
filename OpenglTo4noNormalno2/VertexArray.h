@@ -11,6 +11,7 @@ private:
 	unsigned int m_Size;
 public:
 	VertexArray();
+	VertexArray(VertexBuffer vb,VertexBufferLayout la);
 	~VertexArray();
 
 	void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);

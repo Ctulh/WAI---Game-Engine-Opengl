@@ -1,29 +1,22 @@
 #include "VertexBuffer.h"
 #include "Renderer.h"
 
-
-/*VertexBuffer::VertexBuffer(object &obj)
-:m_Size(obj.count())
-{
-	glGenBuffers(1, &m_RendererID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-	glBufferData(GL_ARRAY_BUFFER, obj.count(), obj.vertexArray, GL_STATIC_DRAW);
-}*/
-
-
-
-VertexBuffer::VertexBuffer(const void* data, unsigned int size)
+VertexBuffer::VertexBuffer(const GLfloat* data, unsigned int size)
 	:m_Size(size)
 {
+	std::cout << std::endl << "VertexBuffer Created" ;
 	glGenBuffers(1, &m_RendererID);
+	std::cout << std::endl << "VertexBuffer take m_RendererID::" << m_RendererID ;
 	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+	//delete[] data;
 }
 
 
 VertexBuffer::~VertexBuffer()
 {
 	glDeleteBuffers(1, &m_RendererID);
+	std::cout << std::endl << "VertexBuffer destructor"<<std::endl;
 }
 
 void VertexBuffer::Bind() const

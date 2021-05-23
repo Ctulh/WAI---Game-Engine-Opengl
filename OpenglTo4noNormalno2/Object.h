@@ -15,11 +15,11 @@ struct Matricies
 	glm::mat4 Projection;
 	Matricies()
 		:Model(1.0f),
-		 Projection(1.0f)
+		Projection(1.0f)
 	{}
 };
 
-struct Properties{
+struct Properties {
 	bool Visible;
 	bool Texture;
 	int Texture_ID;
@@ -44,11 +44,11 @@ public:
 
 	Object(char* in_name, returned& RreturnedStruct, int _index);
 	Object(char* in_name, GLfloat* data, int _index);
-	void Draw(Renderer &renderer, Shader &shader,const int color, const glm::mat4& View);
+	void Draw(Renderer& renderer, Shader& shader, const int color, const glm::mat4& View);
 	void Rotate(glm::quat& quatX, glm::quat& quatY);
 	void Translate(const glm::vec3& translation);
 	void Translate();
 	void Scale(glm::vec3& newvec);
-	void Bind(const glm::mat4& View, Shader &shader);
+	void Bind(const glm::mat4& View, Shader& shader);
 
 };

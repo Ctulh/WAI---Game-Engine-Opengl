@@ -6,6 +6,7 @@ Shader::Shader(const std::string& VertexShaderFilePath, const std::string& Fragm
 	:Vertex_FilePath(VertexShaderFilePath),Fragment_FilePath(FragmentShaderFilePath)
 {
 	m_RendererID = CreateShader(VertexShaderFilePath, FragmentShaderFilePath);
+	std::cout << "Shader take m_RendererID::" << m_RendererID << std::endl;
 }
 
 Shader::~Shader()

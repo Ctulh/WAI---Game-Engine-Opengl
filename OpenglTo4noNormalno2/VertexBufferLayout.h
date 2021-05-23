@@ -30,8 +30,11 @@ private:
 	unsigned int m_Stride;
 public:
 	VertexBufferLayout()
-		:m_Stride(0) {}
+		:m_Stride(0) {
+		std::cout << std::endl << "Creating VertexBufferLayout";}
 	
+	VertexBufferLayout(unsigned int stride):m_Stride(stride){}
+
 	int size() {
 		return m_Elements.size();
 	}

@@ -3,12 +3,12 @@
 
 
 
-ObjectArray::ObjectArray() 
-	:size(), 
-	 shader("vertex.shader", "fragment.shader"),
-	 textureArray()
+ObjectArray::ObjectArray()
+	:size(),
+	shader("vertex.shader", "fragment.shader"),
+	textureArray()
 {
- Camera =glm::lookAt(glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	Camera = glm::lookAt(glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 }
 
 
@@ -21,20 +21,20 @@ void ObjectArray::Add(returned& RreturnedStruct, std::string& path) {
 	size++;
 }
 
-void ObjectArray::Add(Shape* shapeStruct,std::string& path)
+void ObjectArray::Add(Shape* shapeStruct, std::string& path)
 {
 	std::string tempStringName = "Object # " + std::to_string(Array.size());
 	char* c = &tempStringName[0];
-	Array.push_back(new Object(c,shapeStruct->data, textureArray.Add(path)));
+	Array.push_back(new Object(c, shapeStruct->data, textureArray.Add(path)));
 	size++;
 }
 
-void ObjectArray::Add(types type,std::string& path)
+void ObjectArray::Add(types type, std::string& path)
 {
 	switch (type)
 	{
 	case SPHERE:
-		Add(new Sphere(),path);
+		Add(new Sphere(), path);
 		break;
 	case CUBE:
 		break;
