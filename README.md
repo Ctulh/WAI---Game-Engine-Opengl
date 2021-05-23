@@ -1,5 +1,11 @@
-# WAI---3d-Cube_Viewer
-## The project was closed because it might take longer than I have. The goal of this project was to familiarize yourself with OpenGl / Glew / Imgui. Work on other equally interesting projects will begin soon. 
+# WAI-Game-Engine
+
+**The project is closed**
+# [CHANGELOG](https://github.com/Ctulh/WAI---Opengl-CubeViewer/blob/master/CHANGELOG.md)
+
+# Getting Started
+The programm will compile only with **x86 debug**  setting
+
 # Implemented:
 * Abstraction for VertexArray, VertexBuffer, IndexBuffer, TextureArray, Object (the structure containing the previous structures, created for easy navigation among objects), ObjectArray (the structure containing the set of the previous structure) 
 * Functions of rotation, movement, scaling. Rotation using quaternions. 

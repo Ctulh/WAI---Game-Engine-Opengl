@@ -1,38 +1,27 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
+##  05-09-2021
+### Added
+- [Shape.h](https://github.com/Ctulh/WAI---Opengl-CubeViewer/blob/master/OpenglTo4noNormalno2/Shape.h)
+  Declaration class Shape and inherited class - Sphere which help generate and draw  "sphere of the first order" .
+- [Shape.cpp](https://github.com/Ctulh/WAI---Opengl-CubeViewer/blob/master/OpenglTo4noNormalno2/Shape.cpp)
+   Implementation some classes and functions .
+- [Structures.h](https://github.com/Ctulh/WAI---Opengl-CubeViewer/blob/master/OpenglTo4noNormalno2/Structures.h)
+ Added enum of the shapes for the future procedural shape generation.
+### How is drawing "Sphere of the first order" works
+![](OctahedronToSphere)
+![Uzoma Medium Gif](https://media.giphy.com/media/xEVDqEJZ1U64IwhNzW/giphy.gif)
 
-### Added
-- [Shape.h](http://tickets.projectname.com/browse/PROJECTNAME-XXXX)
-  Declaration class Shape and inherited class - Sphere which help generate and draw "sphere of the first order"
-- [PROJECTNAME-YYYY](http://tickets.projectname.com/browse/PROJECTNAME-YYYY)
-  PATCH Ticket title goes here.
+First of all Octahedron verticies are loaded from [ball.wai](https://github.com/Ctulh/WAI---Opengl-CubeViewer/blob/master/OpenglTo4noNormalno2/res/objects/coords_shape/ball.wai), then every side(triangle) procedurial divided into 4 smaller traingles after these actions to all sides called function.
+```c++
+GLfloat* Normalize(GLfloat* _inArray, int count, double radius);
+```
+Where:
+- `_inArray` - Array of Octahedron verticies.
+- `count` - Count of Octahedron elements.
+ - `radius` - Sphere radius.
  
-### Changed
- 
+`Normalize` funcion returnes **normalized** array of Octahedron verticies, that means that all vertices are at the same distance from the center of the sphere.
 ### Fixed
- 
-## [1.2.4] - 2017-03-15
-  
-Here we would have the update steps for 1.2.4 for people to follow.
- 
-### Added
- 
-### Changed
-  
-- [PROJECTNAME-ZZZZ](http://tickets.projectname.com/browse/PROJECTNAME-ZZZZ)
-  PATCH Drupal.org is now used for composer.
- 
-### Fixed
- 
-- [PROJECTNAME-TTTT](http://tickets.projectname.com/browse/PROJECTNAME-TTTT)
-  PATCH Add logic to runsheet teaser delete to delete corresponding
-  schedule cards.
- 
-## [1.2.3] - 2017-03-14
- 
-### Added
-   
-### Changed
- 
-### Fixed
+- Bug with "clear" texture using for the drawing first element at start the program.
